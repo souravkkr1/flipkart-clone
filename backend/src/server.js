@@ -6,7 +6,7 @@ const mongoose = require("mongoose");
 
 
 // routes
-const { userRouter } = require('./routes/user')
+const { authRouter } = require('./routes/auth')
 
 // environment variable
 env.config();
@@ -18,7 +18,7 @@ mongoose.connect(`mongodb+srv://${process.env.MONGO_DB_USER}:${process.env.MONGO
     })
 
 app.use(bodyParser());
-app.use('/api', userRouter);
+app.use('/api', authRouter);
 
 app.listen(process.env.PORT, () => {
     console.log(`Server is running on port ${process.env.PORT}`)
