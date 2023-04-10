@@ -1,4 +1,4 @@
-const { UserModel } = require('../models/user')
+const { UserModel } = require('../../models/user')
 const bcrypt = require('bcrypt');
 const env = require('dotenv')
 const jwt = require("jsonwebtoken")
@@ -14,10 +14,10 @@ exports.signup = (req, res) => {
                     message: 'Something went wrong'
                 })
             } else {
-                const user = new UserModel({ firstName, lastName, email, password: hash_pass, username: Math.random().toString() })
+                const user = new UserModel({ firstName, lastName, email, password: hash_pass, username: Math.random().toString(), role: "admin" })
                 await user.save();
                 return res.status(201).json({
-                    message: 'User created successfully'
+                    message: 'Admin created successfully'
                 })
             }
         })
@@ -34,7 +34,7 @@ exports.signin = async (req, res) => {
     try {
         const user = await UserModel.find({ email })
         console.log(user)
-        if (user.length > 0) {
+        if (user.length > 0 && user[0].role === "admin") {
             bcrypt.compare(password, user[0].password, async (err, result) => {
                 if (!result) {
                     console.log(err);
