@@ -2,10 +2,13 @@ const { UserModel } = require('../models/user')
 const bcrypt = require('bcrypt');
 const env = require('dotenv')
 const jwt = require("jsonwebtoken")
+const { validationResult } = require('express-validator')
 
 env.config();
 
 exports.signup = (req, res) => {
+
+
     const { firstName, lastName, email, password } = req.body
     try {
         bcrypt.hash(password, 6, async (err, hash_pass) => {
