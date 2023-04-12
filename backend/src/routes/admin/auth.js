@@ -1,6 +1,6 @@
 const express = require('express');
 const adminRouter = express.Router();
-const { signup, signin, requireSignin } = require('../../controller/admin/auth');
+const { signup, signin } = require('../../controller/admin/auth');
 const { validateSignupRequest, isReuestValidated, validateSigninRequest } = require('../../validators/auth');
 
 

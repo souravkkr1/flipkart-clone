@@ -42,7 +42,7 @@ exports.signin = async (req, res) => {
                         message: "Something went wrong"
                     })
                 } else {
-                    let token = jwt.sign({ userID: user[0]._id }, process.env.SECRET, { expiresIn: '1h' });
+                    let token = jwt.sign({ userID: user[0]._id, role: user[0].role }, process.env.SECRET, { expiresIn: '1h' });
                     const { _id, firstName, lastName, email, role } = user[0];
                     res.status(200).json({
                         message: "Login successful",
@@ -69,12 +69,4 @@ exports.signin = async (req, res) => {
             message: "Something went wrong"
         })
     }
-}
-
-exports.requireSignin = (req, res, next) => {
-    const token = req.headers.authorization.split(" ")[1]
-    const user = jwt.verify(token, process.env.SECRET);
-    req.user = user;
-    next();
-    // jwt.decode()
 }
